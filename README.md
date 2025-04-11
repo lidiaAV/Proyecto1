@@ -1,3 +1,6 @@
+# Autor:
+Lidia Alcantara Valverde
+
 # Proyecto1
 Primer proyecto del master data science & IA
 
