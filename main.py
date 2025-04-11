@@ -45,7 +45,7 @@ if __name__ == "__main__":
     #aplicar la funcion generar estadisticas descriptivas a todos los datos que contengan la palabra 'ultimo' 
     df_limpio_ultimo = df_limpio.filter(like='Último')
     estadisticas, correlacion = viz.estadisticas_descriptivas(df_limpio_ultimo)
-    estadisticas
+    print(estadisticas)
 
     viz.grafico_temporal_materias(df_limpio)
     viz.grafico_temporal_precios_bajos(df_limpio)

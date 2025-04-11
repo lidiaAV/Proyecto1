@@ -61,7 +61,6 @@ He cargado los 10 csv. En algunos casos no se han podido descargar todas las fil
 
 A continuacion con la funcion merge he ido juntando todos los dataframes del directorio hasta convertirlo en uno, cada columna lleva el nombre de dicha columna y el nombre de la materia a la que corresponde. El primer dataframe lo coge solo y despues va añadiendo con la opcion 'outer' para hacer un full join.
 
-
 ### 3- Transformación
 
 #### Convertir la base de datos para poder trabajar con ella 
@@ -83,6 +82,9 @@ A continuacion con la funcion merge he ido juntando todos los dataframes del dir
 
 - el resto de valores NA he echo lo mismo que en el punto anterior, poner los datos del dia anterior.
 
+### 4- Importación
+
+He creado una carpeta llamada importación con las bases de datos de cada materia limpios y con una columna extra con el nombre de dicha materia para en un futuro en el dashboard de power bi poder cargarlo con la opcion de carpeta y que se junten todos los datasets en formato 'long' ya que en las visualizaciones de powerbi me interesa ese formato
 
 ### 4- Visualizaciones 
 
