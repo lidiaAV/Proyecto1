@@ -44,8 +44,8 @@ def quitar_datos_casi_vacios(df):
     df_vacios = df.copy()
     # Contar el número de valores no nulos en cada fila
     conteo_no_nulos = df_vacios.notnull().sum(axis=1)
-    # Filtrar las filas donde el conteo de valores no nulos es menor que 15 ya que hay 5 columnas por cada materia y si hay menos datos de 15 ha de ser festivo o un dato que no nos interese ya que no tiene valores suficientes.
-    df_vacios = df_vacios[conteo_no_nulos > 20]
+    # Filtrar las filas donde el conteo de valores no nulos es menor que 17 ya que hay 5 columnas por cada materia y la columna fecha y dia semana y si hay menos datos de 17 ha de ser festivo o un dato que no nos interese ya que no tiene valores suficientes.
+    df_vacios = df_vacios[conteo_no_nulos > 17]
     #reestablecer el indice
     df_vacios=df_vacios.reset_index(drop=True)
     return df_vacios
@@ -74,23 +74,4 @@ def rellenar_datos(df):
     df_rellenado.fillna(method='ffill', inplace=True)
     return df_rellenado
 
-#hacemos un grafico de boxplots juntos de las materias que tienen valores bajos
-
-def grafico_boxplot_bajos(df):
-    # Configurar el tamaño de la figura
-    plt.figure(figsize=(12, 6))
-    #coger las columnas que contengan la palabra 'Ultimo'
-    columnas = [col for col in df.columns if 'Último' in col and ('plata' in col or 'petroleo' in col or 'gas_natural' in col or 'cafe' in col in col or 'cobre' in col)]
-    # Graficar cada columna en el DataFrame
-    sns.boxplot(data=df[columnas])
-    # Configurar el título y las etiquetas de los ejes
-    plt.title('Boxplot de Materias Primas')
-    plt.xlabel('Materias Primas')
-    plt.ylabel('Valor')
-    plt.legend([col.replace('Último_', '') for col in columnas], loc='upper left')
-
-    # Mostrar el gráfico
-    plt.show()
-    #guardar el grafico
-    plt.savefig('graficos/grafico_boxplot_bajos.png', dpi=300, bbox_inches='tight')
 

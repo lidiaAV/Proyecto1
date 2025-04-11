@@ -54,3 +54,5 @@ def guardar_datos(df):
         # Guardar el DataFrame en un archivo CSV
         df_materia.to_csv(f'importacion/dataset_{nombre}.csv', index=False)
         # Agregar los datos de la materia prima al DataFrame de materias
+
+

@@ -1,7 +1,13 @@
 # Proyecto1
-Primer proyecto del master data science &amp; IA
+Primer proyecto del master data science & IA
 
 # FUTUROS DE MATERIAS EN LA BOLSA 
+
+
+### 0- Formulación de preguntas
+
+- Es posible predecir la tendencia del precio a futuro?
+- Hay correlacion entre las materias?
 
 ### 1- Extraccion de datos 
 
@@ -16,9 +22,7 @@ Este proyecto tratara sobre algunos de los precios de las materias en la bolsa, 
     Debido a que la industria automotriz tiene una fuerte demanda por este metal, los precios del platino se ven influenciados por las cifras de ventas y fabricación de automóviles. De igual forma, dado que los principales yacimientos se encuentran en Sudáfrica y Rusia, las cifras de producción de estos países pueden afectar los precios.
     https://es.investing.com/commodities/platinum-historical-data
 
-3. Plata: es un metal precioso utilizado por sus propiedades conductivas y estéticas. Esta materia prima se emplea en circuitos eléctricos, joyería, artículos decorativos y como depósito de valor. Junto con el oro, la plata fue utilizada ampliamente como moneda en el siglo viii a.C. Algunos de los principales productores de plata son México, Perú y China.
-
-    La plata tiene una correlación con otras materias primas, como el oro y el petróleo. Por lo tanto, tiende a seguir el comportamiento de estos activos. De igual forma, por su alta demanda en diferentes industrias, la plata se ve afectada por las cifras de inflación. https://es.investing.com/commodities/silver-historical-data
+3. Plata: es un metal precioso utilizado por sus propiedades conductivas y estéticas. Esta materia prima se emplea en circuitos eléctricos, joyería, artículos decorativos y como depósito de valor. Junto con el oro, la plata fue utilizada ampliamente como moneda en el siglo viii a.C. Algunos de los principales productores de plata son México, Perú y China. https://es.investing.com/commodities/silver-historical-data
 
 4. Oil: El crudo de petróleo (PETRÓLEO) es una materia prima natural que se utiliza para una variedad de funciones y productos cruciales y populares, entre los que se incluye la gasolina, el diésel, la calefacción y la generación de electricidad. 
 
@@ -60,8 +64,67 @@ A continuacion con la funcion merge he ido juntando todos los dataframes del dir
 
 ### 3- Transformación
 
+#### Convertir la base de datos para poder trabajar con ella 
+
+- convertir la variable fecha en tipo data, he creado una funcion llamada convertir_fecha para poder hacerlo y ordenar el indice por la fecha.
+
+- quitar el caracter de % de la variable % variacion, he usado la funcion replace.
+
+
 #### Limpieza de nulos: 
 
 - He borrado las columnas de vol. ya que representaban la volatilidad, que ya va representada por el % de volatilidad pero era una variable que venia nulos asi que me quedo con la variable del %. 
 
-- El resto de nulos son de las materias que no han llegado a 
+- Funcion Quitar_domingos es una funcion para quitar todos los datos correspondientes a los dias que sean domingo ya que la bolsa esta cerrada los fines de semana y si tenemos datos es porque son premercado o de otra bolsa.
+
+- quitar datos casi vacios, he creado esa funcion para quitar las filas en las que solo haya valores en 3 materias o menos ya que si hay tan pocos datos es porque ha tenido que estar cerrada la bolsa o ha sido festivo y considero que ese dato no me interesa.
+
+- No tenemos el valor de los primeros años de las materias de Plomo, Paladio y Platino. He creado una funcion para que rellene los precios anteriores a la primera fecha con los valores de la primera fecha que tenemos 
+
+- el resto de valores NA he echo lo mismo que en el punto anterior, poner los datos del dia anterior.
+
+
+### 4- Visualizaciones 
+
+Para hacer inferencia he creado una tabla de estadisticas de la variable del valor último llamada estadisticas. 
+
+He realizado varias graficas temporales para verlas mejor he separado primero con todas las materias, luego con las materias que tienen los precios mas bajos ya que si no no se pueden ver. Estos son la plata, petroleo, gas natural y cobre. 
+    - Viendo estos graficos podemos ver que el oro sigue una tendencia alcista continua y la plata tambien. 
+    - El cacao ha tenido una fuerte subida desde el 2024.
+    - El resto de metales son mas o menos estables salvo el paladio que subio mucho y ya ha recuperado el valor del precio estable que tenia.
+    - Podemos ver que el gas natural sigue las subidas del petroleo
+    - El petroleo tiene muy en cuenta las crisis economicas que ha habido como en 2008 y en 2020 en el covid. Baja mucho el precio en muy poco tiempo.
+
+He realizado graficos de boxplot para las materias menos el cacao para ver como se distribuian, podemos ver que los valores mas dispersos y por lo tanto los que tienen mas outliers son los valores del café y del paladio.
+
+### 5- Inferencia
+
+He creado la correlacion de las materias junto con un grafico heatmap ( gráfico de calor). En el podemos ver que las siguientes correlaciones son las mas elevadas:
+    - oro: 88% con la plata y 83% con el cobre 
+    - petroleo: 79% con el cobre 
+    - plata: 87% con el cobre y 83% con el café 
+    - café: a demas de la plata, 79% con el cobre
+
+### 6- Contraste de hipotesis
+
+He creado varias hipotesis para ver si se comportan de la misma manera 2 materias concretas, para ello he creado una funcion en la cual puedes escribir por el imput que te pide la terminal que introduzcas el nombre de las 2 materias y lo calcula respecto al % de varianza.
+
+    - Las materias de ejemplo que he usado son el oro y el plomo, podemos ver que no podemos aceptar la hipotesis alternativa, asi que podemos decir que la varianza es diferente.
+
+### 7- Modelo de prediccion
+
+He creado un modelo de prediccion ARIMA para el Platino, cogiendo los datos desde el 01-01-2009 hasta el 01-01-2025 y que tenga en cuenta los 5 dias anteriores y los 5 dias posteriores y que prediga los 365 dias restantes y con un intervalo de confianza del 90%.
+
+He encapsulado el codigo en una funcion y se puede usar el mismo modelo para el resto de materias o cambiar al gusto.
+
+
+### 8- conclusiones dashboard powerbi
+
+    - Como hemos dicho, con los graficos podemos ver la distribucion en el tiempo, lo mas destacable son las subidas del 2024 del cacao y que el oro sigue una tendencia alcista a lo largo del tiempo y tiene muy poca correccion.
+
+    - Podemos ver que hay correlacion entre las variables del oro y la plata, eso puede ser util ya que en diferentes brokers cobran comision y hay diferenciales de apertura y se puede invertir en la variable que este mas correlacionada y que tenga menos diferencial y comisiones.
+
+    - Por otro lado tenemos una tabla en la que muestra cuantos dias lleva cerrando en positivo o negativo, eso puede ser un indicador de que si lleva varios dias igual puede haber una correccion y cambio de tendencia y puede ser momento para cerrar la posicion con ganancias y esperar a que pase dicha correccion.
+
+    
+

@@ -42,6 +42,8 @@ def grafico_temporal_materias(df):
     plt.show()
     #guardar el grafico
     plt.savefig('graficos/grafico_temporal_materias.png', dpi=300, bbox_inches='tight')
+    #cerramos el grafico
+    plt.close()
 
 #grafico temporal de la correlacion entre el oro y el petroleo
 def grafico_temporal_precios_bajos(df):
@@ -63,6 +65,8 @@ def grafico_temporal_precios_bajos(df):
     plt.show()
     #guardar el grafico
     plt.savefig('graficos/grafico_temporal_precios_bajos.png', dpi=300, bbox_inches='tight')
+    #cerramos el grafico
+    plt.close()
 
 #hacemos un grafico de boxplots juntos de las materias que tienen valores intermedios
 def grafico_boxplot_medios(df):
@@ -83,6 +87,8 @@ def grafico_boxplot_medios(df):
     plt.show()
     #guardar el grafico
     plt.savefig('graficos/grafico_boxplot_medios.png', dpi=300, bbox_inches='tight')
+    #cerramos el grafico
+    plt.close()
 
 def grafico_boxplot_bajos(df):
     # Configurar el tamaño de la figura
@@ -92,7 +98,7 @@ def grafico_boxplot_bajos(df):
     # Graficar cada columna en el DataFrame
     sns.boxplot(data=df[columnas])
     # Configurar el título y las etiquetas de los ejes
-    plt.title('Boxplot de Materias Primas')
+    plt.title('Boxplot de Materias Primas Bajas')
     plt.xlabel('Materias Primas')
     plt.ylabel('Valor')
     plt.legend([col.replace('Último_', '') for col in columnas], loc='upper left')
@@ -100,31 +106,33 @@ def grafico_boxplot_bajos(df):
     plt.show()
     #guardar el grafico
     plt.savefig('graficos/grafico_boxplot_bajos.png', dpi=300, bbox_inches='tight')
+    #cerramos el grafico
+    plt.close()
+
 
 def generar_mapa_calor(correlacion, output_path='graficos/grafico_correlacion.png'):
      # Crear el mapa de calor
     plt.figure(figsize=(12, 8))
-    sns.heatmap(correlacion, annot=True, cmap='coolwarm', fmt='.2f', linewidths=.5)
-    plt.title('Mapa de Calor de Correlación')
 
     # Quitar la palabra 'Último_' de las etiquetas del eje x e y
     correlacion.columns = correlacion.columns.str.replace('Último_', '', regex=False)
     correlacion.index = correlacion.index.str.replace('Último_', '', regex=False)
 
+    sns.heatmap(correlacion, annot=True, cmap='coolwarm', fmt='.2f', linewidths=.5)
+    plt.title('Mapa de Calor de Correlación')
     # Configurar las etiquetas del eje x
     plt.xticks(rotation=45, ha='right')
-    # Guardar el gráfico
-    plt.savefig(output_path, dpi=300, bbox_inches='tight')
     # Mostrar el gráfico
     plt.show()
     #guardar el grafico
     plt.savefig('graficos/grafico_correlacion.png', dpi=300, bbox_inches='tight')
+    #cerramos el grafico
+    plt.close()
 
 
 def realizar_contraste_hipotesis(df):
-   
-    materia1 = input("Introduce la primera materia prima (por ejemplo, 'oro'): ").strip()
-    materia2 = input("Introduce la segunda materia prima (por ejemplo, 'plomo'): ").strip()
+    materia1 = input("Introduce la primera materia prima para comparar el test de hipotesis (por ejemplo, 'oro'): ").strip()
+    materia2 = input("Introduce la segunda materia prima para comparar el test de hipotesis (por ejemplo, 'plomo'): ").strip()
     # Seleccionar las columnas de interés
     var1 = df[f'% var._{materia1}']
     var2 = df[f'% var._{materia2}']
@@ -172,11 +180,13 @@ def realizar_contraste_hipotesis(df):
     plt.show()
     #guardar el grafico
     plt.savefig(f'graficos/grafico_contraste_hipotesis_{materia1}_{materia2}.png', dpi=300, bbox_inches='tight')
+    #cerramos el grafico
+    plt.close()
 
 def predecir_materia_arima(df, start_date='2009-01-01', pred_start_date='2025-01-01', steps=365, output_path='graficos/prediccion.png'):
     
     # Solicitar la materia prima al usuario
-    materia = input("Introduce la materia prima (por ejemplo, 'platino'): ").strip()
+    materia = input("Introduce la materia prima para hacer la prediccion (por ejemplo, 'platino'): ").strip()
     columna = f'Último_{materia}'
 
     # Verificar si la columna existe en el DataFrame
@@ -193,7 +203,7 @@ def predecir_materia_arima(df, start_date='2009-01-01', pred_start_date='2025-01
     entrenar = df_prediccion[df_prediccion['Fecha'] < pred_start_date]
 
     # Crear y ajustar el modelo ARIMA
-    model = ARIMA(entrenar[columna], order=(5, 0, 5))  # (p,d,q) valores ajustables
+    model = ARIMA(entrenar[columna], order=(5, 0, 5))  # (p,d,q) valores ajustables, dias anteriores y posteriores
     model_fit = model.fit()
 
     # Realizar predicciones
@@ -223,3 +233,5 @@ def predecir_materia_arima(df, start_date='2009-01-01', pred_start_date='2025-01
     plt.show()
     # Guardar el gráfico
     plt.savefig(f'graficos/prediccion_{materia}.png', dpi=300, bbox_inches='tight')
+    #cerramos el grafico
+    plt.close()
